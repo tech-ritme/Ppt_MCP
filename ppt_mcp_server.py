@@ -406,8 +406,9 @@ def get_server_info() -> Dict:
 def main(transport: str = "stdio", port: int = 8000):
     if transport == "http":
         import asyncio
-        # Set the port for HTTP transport
-        app.settings.port = port
+    # Railway fournit dynamiquement le port d'écoute
+    app.settings.host = "0.0.0.0"
+    app.settings.port = int(os.environ.get("PORT", str(port)))
         # Start the FastMCP server with HTTP transport
         try:
             app.run(transport='streamable-http')
